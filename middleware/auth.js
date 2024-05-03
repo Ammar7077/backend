@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const auth = (req, res, next) => {
   if (req.headers.authorization) {
@@ -17,5 +17,4 @@ const auth = (req, res, next) => {
     return res.status(400).json({ message: "authorization required" });
   }
 };
-
-module.exports = auth;
+export default auth;

@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+import mongoose from "mongoose";
 
 const checkUser = async (req, res, next) => {
   const userId = req.params.id;
@@ -19,4 +19,4 @@ const checkUser = async (req, res, next) => {
   }
 };
 
-module.exports = checkUser;
+export default checkUser;

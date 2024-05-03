@@ -1,26 +1,26 @@
-const express = require("express");
-const app = express();
-require("dotenv").config();
-const corsMiddleware = require("./config/corsConfig");
+import express from "express";
 
-// ! ACCESS TO THE FRONTEND and EXPRESS JS THINGS
+import { configDotenv } from "dotenv";
+configDotenv();
+
+const app = express();
+import corsMiddleware from "./config/corsConfig.js";
+
 app.use(corsMiddleware);
 app.use(express.json());
 app.use(express.static("static"));
 
-// ! ROUTES
-const authRouter = require("./routes/authRouter");
-const connectToDatabase = require("./config/db-connettion");
-const userRouter = require("./routes/userRouter");
+import authRouter from "./routes/authRouter.js";
+import connectToDatabase from "./config/db-connettion.js";
+import userRouter from "./routes/userRouter.js";
+import sharedRouter from "./routes/sharedRouter.js";
 
 app.use("/auth", authRouter);
+app.use("/sharedTasks", sharedRouter);
 app.use("/users", userRouter);
-app.get("/", (req, res) => res.end("Response from server"));
 
-// ! CONNETTING TO THE DATABASE
 connectToDatabase();
 
-// ! LISTENING SERVER
 const PORT = process.env.PORT || 3030;
 app.listen(PORT, (error) =>
   error

@@ -1,5 +1,5 @@
-const { default: mongoose } = require("mongoose");
-const User = require("../models/user");
+import mongoose from "mongoose";
+import User from "../models/user.js";
 
 const getUsers = async (req, res) => {
   try {
@@ -35,7 +35,6 @@ const getUser = async (req, res) => {
 const getTodos = async (req, res) => {
   try {
     const userId = req.params.id;
-
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -201,7 +200,8 @@ const updateTodoItem = async (req, res) => {
   const userId = req.query.userId;
   const todoId = req.params.id;
   const itemId = req.query.itemId;
-  const { name, description, item_priority, is_checked } = req.body;
+  const { name, description, item_priority, is_checked, item_due_date } =
+    req.body;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(404).json({ error: "User not found" });
@@ -240,6 +240,9 @@ const updateTodoItem = async (req, res) => {
     }
     if (is_checked !== undefined) {
       item.is_checked = is_checked;
+    }
+    if (item_due_date) {
+      item.item_due_date = item_due_date;
     }
 
     await user.save();
@@ -290,7 +293,7 @@ const deleteTodo = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getUsers,
   getUser,
   createTodo,

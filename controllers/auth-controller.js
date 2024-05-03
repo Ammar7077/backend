@@ -1,21 +1,21 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const User = require("../models/user");
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import User from "../models/user.js";
 
 const secret = process.env.SECRET_KEY;
 
-const generateAccessToken = async (user) => {
-  return await jwt.sign({ _id: user._id, role: user.role }, secret, {
+export const generateAccessToken = async (user) => {
+  return jwt.sign({ _id: user._id, role: user.role }, secret, {
     expiresIn: "7d",
   });
 };
 
-const handleServerError = (res, error, message) => {
+export const handleServerError = (res, error, message) => {
   console.error(`${message}:`, error);
   res.status(500).json({ error: "Internal Server Error" });
 };
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   const { email, password, username } = req.body;
 
   if (
@@ -50,7 +50,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -70,7 +70,7 @@ const login = async (req, res) => {
   }
 };
 
-const refresh = async (req, res) => {
+export const refresh = async (req, res) => {
   try {
     const existingUser = await User.findById(req.user._id);
     if (!existingUser) {
@@ -82,5 +82,3 @@ const refresh = async (req, res) => {
     handleServerError(res, error, "Error during auto login");
   }
 };
-
-module.exports = { login, register, refresh };

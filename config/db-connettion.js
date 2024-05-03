@@ -1,7 +1,6 @@
-// db.js
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-async function connectToDatabase() {
+export default async function connectToDatabase() {
   try {
     await mongoose.connect(process.env.DB_URL, {
       useNewUrlParser: true,
@@ -12,5 +11,3 @@ async function connectToDatabase() {
     console.error(err);
   }
 }
-
-module.exports = connectToDatabase;

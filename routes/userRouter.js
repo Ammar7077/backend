@@ -1,20 +1,17 @@
-const { Router } = require("express");
-const {
-  getUsers,
-  updateUser,
-  deleteUser,
-  getUser,
+import { Router } from "express";
+import {
   createTodo,
-  deleteTodo,
-  getTodos,
-  updateTodo,
   createTodoItem,
+  deleteTodo,
   deleteTodoItem,
+  getTodos,
+  getUser,
+  getUsers,
+  updateTodo,
   updateTodoItem,
-} = require("../controllers/user-controller");
-const auth = require("../middleware/auth");
-const checkRole = require("../middleware/checkRole");
-const checkUser = require("../middleware/checkUser");
+} from "../controllers/user-controller.js";
+import auth from "../middleware/auth.js";
+import checkUser from "../middleware/checkUser.js";
 const userRouter = Router();
 
 userRouter.get("/", getUsers);
@@ -26,7 +23,8 @@ userRouter.post("/todos/:id", auth, createTodoItem);
 userRouter.put("/todoItem/:id", auth, updateTodoItem);
 
 userRouter.put("/todos/:id", auth, updateTodo);
+
 userRouter.delete("/todos/:id", auth, deleteTodo);
 userRouter.delete("/todoItem/:id", auth, deleteTodoItem);
 
-module.exports = userRouter;
+export default userRouter;

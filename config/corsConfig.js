@@ -1,6 +1,4 @@
-// corsConfig.js
-const cors = require("cors");
-
+import cors from "cors";
 const allowedOrigins = ["http://localhost:3000"];
 
 const corsOptions = {
@@ -11,4 +9,4 @@ const corsOptions = {
 
 const corsMiddleware = cors(corsOptions);
 
-module.exports = corsMiddleware;
+export default corsMiddleware;
